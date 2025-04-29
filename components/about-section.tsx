@@ -1,60 +1,60 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
-import { useInView } from "react-intersection-observer"
-import { Github, MapPin, Users, Code } from "lucide-react"
-import Image from "next/image"
-import { aboutMe } from "@/config/freelance-config"
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { Github, MapPin, Users, Code } from "lucide-react";
+import Image from "next/image";
+import { aboutMe } from "@/config/freelance-config";
 
 interface GitHubProfile {
-  login: string
-  avatar_url: string
-  html_url: string
-  name: string
-  bio: string
-  location: string
-  followers: number
-  public_repos: number
+  login: string;
+  avatar_url: string;
+  html_url: string;
+  name: string;
+  bio: string;
+  location: string;
+  followers: number;
+  public_repos: number;
 }
 
 export default function AboutSection() {
-  const [profile, setProfile] = useState<GitHubProfile | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [profile, setProfile] = useState<GitHubProfile | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
-  })
+  });
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await fetch("/api/github-profile")
+        const response = await fetch("/api/github-profile");
         if (!response.ok) {
-          throw new Error(`API responded with status: ${response.status}`)
+          throw new Error(`API responded with status: ${response.status}`);
         }
-        const data = await response.json()
-        setProfile(data)
+        const data = await response.json();
+        setProfile(data);
       } catch (error) {
-        console.error("Error fetching GitHub profile:", error)
+        console.error("Error fetching GitHub profile:", error);
         // Fallback to demo profile
         setProfile({
-          login: "github-user",
+          login: "brightScript001",
           avatar_url: "https://avatars.githubusercontent.com/u/12345678",
-          html_url: "https://github.com/github-user",
-          name: "GitHub User",
+          html_url: "https://github.com/brightScript001",
+          name: "Success Bright",
           bio: "Full-stack developer passionate about creating exceptional digital experiences",
-          location: "San Francisco, CA",
+          location: "Lagos, Nigeria",
           followers: 120,
           public_repos: 25,
-        })
+        });
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }
+    };
 
-    fetchProfile()
-  }, [])
+    fetchProfile();
+  }, []);
 
   return (
     <section id="about" className="w-full py-20">
@@ -66,8 +66,12 @@ export default function AboutSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">About Me</h2>
-          <p className="text-lg text-white/70 max-w-2xl mx-auto">{aboutMe.headline}</p>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
+            About Me
+          </h2>
+          <p className="text-lg text-white/70 max-w-2xl mx-auto">
+            {aboutMe.headline}
+          </p>
         </motion.div>
 
         <div className="grid grid-cols-1 gap-8">
@@ -164,7 +168,9 @@ export default function AboutSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="minimal-card p-6"
           >
-            <h3 className="text-xl font-bold mb-4 text-white">Professional Overview</h3>
+            <h3 className="text-xl font-bold mb-4 text-white">
+              Professional Overview
+            </h3>
             <div className="space-y-4">
               {aboutMe.bio.map((paragraph, index) => (
                 <p key={index} className="text-white/70">
@@ -176,5 +182,5 @@ export default function AboutSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
